@@ -7,27 +7,55 @@ const galleryEl = document.querySelector(".gallery");
 
 const lastInLiImageEl = galleryItems
   .map(({ preview, original, description }) =>
-  `<li class = "gallery__item item"> <img class="gallery__image imgformat"  src="${original}" loading="lazy" alt="${description}"width="850" ></li>`)
+      `<div class="gallery__item">
+  <a class="gallery__link" href="large-image.jpg">
+    <img
+      class="gallery__image"
+      src="${original}"
+      data-source="large-image.jpg"
+      alt="${description}"
+    />
+  </a>
+</div>
+ `)
     .join("");
-galleryEl.innerHTML = '<ul class="gallery list">' + lastInLiImageEl + '</ul>';  
-
+galleryEl.innerHTML = lastInLiImageEl;  
 
 //galleryEl.insertAdjacentHTML('beforeend', '<ul class="list">' + lastInLiImageEl + '</ul>');  
 
 
 const selectImg = event => {
-    
+    event.preventDefault();
     if (event.target.nodeName !== "IMG") { return; }
-    
-    const selectedImg = event.target.alt;
-    const namberEl = event.target.offsetParent.childElementCount;
+   // const selectimg = event.target;
+   // selectimg.classList.add("sel-img");
+   const selectedAlt = event.target.alt;
+    const selectedImg = event.target.src;
     instance.show();
+    const navImgInDivEl = document.querySelector('.basicLightbox__placeholder > img'); 
+  navImgInDivEl.src = selectedImg;
+  
+const selectKeyEscp = event => { 
+  event.preventDefault();
+  const keyEnter = event.key;
+const navDivEl = document.querySelector('.basicLightbox');
+  console.log(keyEnter);
+  if (keyEnter === "Escape") { console.log(keyEnter === "Escape");
+    let event = new Event("click", { bubbles: true, cancelable: true});
+    navDivEl.dispatchEvent(event);
+  };
+
+};
+galleryEl.addEventListener("keydown", selectKeyEscp);
+
+
     // const galleryEl = document.querySelector('.gallery >li [alt="${selectedImg}"]');
     //galleryEl.classList.add("gallery__link");
    
-    console.log(selectedImg);
-    console.log(namberEl);
-    console.log(event.currentTarget); console.log(event.target);
+   console.log(selectedAlt);
+   console.log(selectedImg);
+    
+   console.log(event.currentTarget); console.log(event.target);
 };
 
 galleryEl.addEventListener("click", selectImg);
@@ -40,12 +68,13 @@ galleryEl.addEventListener("click", selectImg);
   //      </p>
  //   </div>
 //`)
-
-
-
 const instance = basicLightbox.create(`
-    <img src="assets/images/image.png" width="800" height="600">
-`)
-
+   <img src="" width: 100%;>
+`
+); //<img src="assets/images/image.png" width="800" height="600">
 //instance.show()
+ 
 
+
+
+ 
